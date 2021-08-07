@@ -1,0 +1,167 @@
+1.What is the total salary for each department
+SELECT deptno,SUM(SAL) Toatal
+FROM emp
+GROUP BY deptno
+ORDER BY 2;
+
+2.Who is drawing the lowest salary in dept 10
+SELECT deptno, MIN(sal) LowestSal
+FROM EMP
+WHERE deptno=10;
+
+3.What is the average salary for Managers
+SELECT AVG(sal)
+FROM EMP
+WHERE job LIKE 'MAN%';
+
+4.What is the total salary for salesman
+SELECT SUM(sal) Total FOR 'SALESMEN'
+FROM EMP;
+--------------------------------------------------------------------
+1.How many persons are in each role
+SELECT job,COUNT(job)
+FROM EMP
+GROUP BY job;
+
+2.How many persons are there in each role joined after Apr 81
+     ????
+SELECT COUNT(empno)
+FROM EMP
+WHERE hiredate IN ('09-DEC-82','12-JAN-83','23-JAN-82');
+
+3.What is the highest salary among analyst
+SELECT MAX(sal) AS 'MAX AMOUNG ANALYST'
+FROM EMP
+WHERE job LIKE 'AN%';
+
+4.What is the highest commission paid
+SELECT MAX(comm)
+FROM emp;
+
+5.How many departments are there
+SELECT COUNT(DISTINCT(deptno))
+FROM EMP;
+--------------------------------------------------------------------------
+Q)What is the average salary for each department
+SELECT deptno,ROUND(AVG(SAL),2) AVARAGE
+FROM emp
+GROUP BY deptno;
+--------------------------------------------------------------------------
+Q)Which job role is having average salary less than 2000 and arrange in the order of average salary
+SELECT deptno,ROUND(AVG(SAL),2) AVGSAL
+FROM emp
+GROUP BY deptno
+HAVING AVG(sal)<2000
+ORDER BY 2;
+---------------------------------------------------------------------------
+Q)which department total salary is more than 10000?
+SELECT deptno,TOTAL(SAL) TOTAL
+FROM emp
+GROUP BY deptno
+HAVING SUM(sal)>10000;
+----------------------------------------------------------------------------
+1.Select the last name and job id from all employees whose department id is equal to Accounting.
+SELECT e.ename,e.empno,d.deptno
+FROM emp e,dept d
+WHERE e.deptno=d.deptno AND dname LIKE 'ACC%';
+
+2.Find the first names of all employees whose salaries are greater than the minimum salary for the Manager
+SELECT ename,sal
+FROM emp
+where sal > ( SELECT MIN(sal) 
+	      FROM emp 
+	      WHERE job like "MAN%");
+
+3. Display the details of the employee working in Chicago
+SELECT e.ename
+FROM emp e, dept d
+WHERE d.deptno=e.deptno AND d.loc like 'DA%';
+--------------------------------------------------------------------------
+1.How many employees work in Chicago?
+SELECT COUNT(e.ename)
+FRom EMP E, DEPT D
+WHERE e.deptno=d.deptno AND d.loc LIKE 'CH%';
+
+2.Which employees work in Chicago?
+SELECT e.ename
+FRom EMP E, DEPT D
+WHERE e.deptno=d.deptno AND d.loc LIKE 'CH%';
+
+3.List the employees’ names and cities in which they work. Order the list by city.
+SELECT e.name,d.loc
+FROM emp e, dept d
+WHERE e.deptno=d.deptno
+ORDER BY d.loc;
+----------------------------------------------------------------------
+1.List the name and designation of the employees who does not report to anybody.
+SELECT ename,job
+FROM emp 
+WHERE MGR IS NULL;
+
+2.Which department is not having any employees ?????
+SELECT d.dname, e.ename
+FROM emp e,dept d
+LEFT OUTER JOIN emp e
+ON e.deptno=d.deptno;
+
+3.list employees & their managers
+SELECT workers.ename|| ' -works for- '||manager.ename
+FROM emp worker, emp manager
+WHERE worker.empno=manager.empno
+-----------------------------------------------------------------------------
+SUB QUERY
+1.
+SELECT ename,job
+FROM EMP
+WHERE deptno = (SELECT dname
+		FROM DEPT
+		WHERE dname LIKE 'ACC%');
+
+2.
+SELECT ename,sal
+FROM emp
+WHERE sal > ( SELECT MIN(sal) 
+	      FROM emp 
+	      WHERE job like "MAN%");
+
+3.
+SELECT *
+FROM emp
+WHERE deptno =(SELECT deptno
+	       FROM DEPT
+	       WHERE loc LIKE 'CH%');
+
+4.
+SELECT COUNT(empno)
+FROM emp
+WHERE deptno = (SELECT deptno
+		FROM dept
+		WHERE loc LIKE 'CH%');
+
+5.
+SELECT ename
+FROM emp
+WHERE deptno = (SELECT deptno
+		FROM dept
+		WHERE loc LIKE 'CH%');
+
+6.???
+SELECT ename 
+
+7.
+SELECT ename,job
+FROM emp
+WHERE mgr IS NULL;
+
+8.???
+SELECT dname
+FROM dept
+WHERE deptno = (SELECT deptno
+FROM emp
+WHERE deptno NOT IN(10,20,30,));
+
+9.???
+SELECT ename
+FROM emp
+WHERE 
+
