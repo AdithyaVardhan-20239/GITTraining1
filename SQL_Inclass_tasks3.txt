@@ -1,0 +1,35 @@
+ppt eg:
+SELECT empno,ename,
+       (CASE
+        WHEN deptno =(SELECT deptno
+        					FROM dept
+        					WHERE loc LIKE 'NEW%')
+        THEN 'Canada' ELSE 'USA' END) loc
+FROM   emp;
+
+1.write a subquery using case statement to display non sales if dept is not sales
+
+SELECT deptno,(CASE
+		WHEN dname = 'SALES'
+		THEN '' ELSE 'NON-SALES' END)dname
+FROM dept;
+
+2.If salray of an employee is more than 1000, then display salary otherwise display 1000
+
+SELECT (CASE 
+	WHEN sal >1000
+	THEN sal ELSE 1000 END)sal
+FROM emp;
+
+3.Display salary as low, medium high based on salary rangeLess than 100 less1000 to 2500 mediumMore than 2500 high
+
+SELECT (CASE
+	WHEN sal<100
+	THEN 'LESS'
+	WHEN sal BETWEEN 1000 AND 2500
+	THEN 'MEDIUM'
+	WHEN sal>2500
+	THEN 'HIGH' END)sal
+FROM emp;
+-------------------------------------------------------------------------------------------------------------------------
+

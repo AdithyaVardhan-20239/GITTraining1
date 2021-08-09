@@ -100,7 +100,7 @@ WHERE MGR IS NULL;
 
 2.Which department is not having any employees ?????
 SELECT d.dname, e.ename
-FROM emp e,dept d
+FROM dept d
 LEFT OUTER JOIN emp e
 ON e.deptno=d.deptno;
 
@@ -146,22 +146,40 @@ WHERE deptno = (SELECT deptno
 		WHERE loc LIKE 'CH%');
 
 6.???
-SELECT ename 
+
+SELECT ename,loc
+FROM emp,dept
+WHERE emp.deptno = (SELECT deptno
+FROM dept)
+ORDER BY loc
+
+SELECT a.ename,b.loc
+FROM emp a,(SELECT loc,deptno
+FROM dept
+order by loc) b
+WHERE a.deptno = b.deptno
 
 7.
 SELECT ename,job
 FROM emp
 WHERE mgr IS NULL;
 
-8.???
+8.
 SELECT dname
 FROM dept
-WHERE deptno = (SELECT deptno
-FROM emp
-WHERE deptno NOT IN(10,20,30,));
+WHERE deptno NOT IN (SELECT deptno
+FROM emp);
 
-9.???
-SELECT ename
-FROM emp
-WHERE 
+9.
+SELECT e.ename,m.ename
+FROM emp e, (select ename,empno
+from emp)m
+WHERE m.empno=e.mgr;
+ 
+   correlate subqueary  ***wrong***
+select ename
+from emp outer
+where mgr = (select empno
+from emp
+where empno=outer.mgr);
 
